@@ -1,0 +1,26 @@
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/builtins] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/commands] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/functions] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/lib] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/structures] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/functions/vec_] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx] 
+@MATLAB server: Setting up feedback server.
+@MATLAB server: Starting MATLAB server.
+@MATLAB server: Hosted at 127.0.0.1:6038.
+@MATLAB server: Waiting for Tudat client.
+@MATLAB server: Client connected.
+@MATLAB server: Defining nominal constellation.
+@MATLAB server: Retrieving simulation parameters.
+@MATLAB server: Initializing thrust feedback controller.
+@MATLAB server: Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 35).
+@MATLAB server: Thrust feedback controller waiting for requests.
+@MATLAB controller: Redefining nominal anchor at t = 0 s.
+@MATLAB controller: Computing new MPC window starting at t = 0 s.

@@ -1,0 +1,16 @@
+# MacOS hiden files
+*.DS_Store
+
+# Autosave windows 
+*.asv
+
+# Matlab
+*.m~ 
+*.autosave
+codegen/
+slprj/
+sccprj/
+*.slx
+
+# Compiled tudat apps
+example*/tudat-app
