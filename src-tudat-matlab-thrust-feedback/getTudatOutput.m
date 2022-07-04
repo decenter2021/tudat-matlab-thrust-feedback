@@ -1,6 +1,9 @@
+%% Package: tudat-matlab-thrust-feedback
+% Author: Leonardo Pedroso
+
 %% Covert Tudat .dat ouput files to .mat files
 %% Init workspace 
-% Variable 'path_tudat_app' is defined by the makefile before running thos script
+% Variable 'path_tudat_app' is defined by the makefile before running this script
 clearvars -except path_tudat_app
 
 %% Get port and number of satellites

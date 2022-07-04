@@ -1,3 +1,7 @@
+/* Package: tudat-matlab-thrust-feedback
+*  Author: Leonardo Pedroso
+*/
+
 #ifndef TUDAT_THRUST_FEEDBACK_MATLAB_H
 #define TUDAT_THRUST_FEEDBACK_MATLAB_H
 

@@ -1,3 +1,6 @@
+%% Package: tudat-matlab-thrust-feedback
+% Author: Leonardo Pedroso
+
 classdef tudatMatlabServer
     properties
         server;
@@ -26,8 +29,6 @@ classdef tudatMatlabServer
             obj.server.Timeout = 100;
             obj.server.Terminator = '';
             obj.server.DatagramTerminateMode = 'on';
-             
-
             fopen(obj.server);
             fprintf("@MATLAB server: Hosted at %s:%d.\n",obj.SERVER_ADDR,obj.SERVER_PORT);
         end
@@ -81,7 +82,6 @@ classdef tudatMatlabServer
             else
                 x = data(2:end);
             end
-  
         end
         
          function sendResponse(obj,u)

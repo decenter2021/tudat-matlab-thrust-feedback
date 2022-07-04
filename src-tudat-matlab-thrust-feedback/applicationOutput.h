@@ -1,3 +1,9 @@
+/*
+ * Modified version of 'applicationOutput.h' available in 
+ * https://github.com/Tudat/tudatExampleApplications 
+ * Original license below
+ */
+
 /*    Copyright (c) 2010-2019, Delft University of Technology
  *    All rigths reserved
  *
@@ -7,10 +13,6 @@
  *    a copy of the license with this file. If not, please or visit:
  *    http://tudat.tudelft.nl/LICENSE.
 */
-/*
- * Modified version of 'applicationOutput.h' available in 
- * https://github.com/Tudat/tudatExampleApplications 
- * */
  
 #ifndef TUDAT_APPLICATIONOUTPUT_H
 #define TUDAT_APPLICATIONOUTPUT_H

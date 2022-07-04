@@ -1,3 +1,19 @@
+%% Package: tudat-matlab-thrust-feedback
+% Author: Leonardo Pedroso
+%% Function getStringMacrosFromCHeader
+% Import int values of macros in a .h C header
+% Inputs: 'path': path of C header file
+% 		  'arg: cell array of macro strings'
+% Outputs: cell array of strings cooresponding to input macros
+%% Example:
+% In C header file 'path_to_header/header.h':
+% "#DEFINE THRUST_FRAME 'TNW_thrust_frame'" 
+% The MATLAB command 
+% args = {'THRUST_FRAME'};
+% argv = getStringMacrosFromCHeader('path_to_header/header.h',args);
+% argv{1}
+%	'TNW_thrust_frame'
+%% Implementation
 function argv = getStringMacrosFromCHeader(path,args)
     argv = cell(length(args),1);
     fid = fopen(path);
