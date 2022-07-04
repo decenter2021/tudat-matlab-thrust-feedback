@@ -1,3 +1,7 @@
+/*Package: tudat-matlab-thrust-feedback
+* Author: Leonardo Pedroso
+*/
+
 // ---------- Headers ----------
 // Standard headers
 #include <ctime>

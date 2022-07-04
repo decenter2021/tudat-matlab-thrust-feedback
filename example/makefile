@@ -1,16 +1,12 @@
-
-# Still to improve:
-# Variable tudat-bundle-app-dir is not necessary for compilation, we may just append it to the other variable of the tudat-bundle
-
 # -------------- Set paths -----------------------------------------------------
 # Matlab dirs
 matlab-exe := /usr/local/MATLAB/R2021b/bin/matlab
 # Tudat installation specific variables
 tudat-bundle-dir := /mnt/nfs/home/lpedroso/tudat-bundle
 # Tudat app specific variables
-tudat-matlab-feedback-dir := ../src-tudat
-cpp-src := simulationConstellation.cpp
-matlab-feedback-src := DDELQRConstellationFeedback
+tudat-matlab-feedback-dir := ../src-tudat-matlab-thrust-feedback
+cpp-src := tudat-app.cpp
+matlab-feedback-src := matlab-app
 matlab-check-control-cycles := 5
 # ------------------------------------------------------------------------------
 
@@ -61,9 +57,9 @@ output:
 clean: confirmation-clean
 	rm -rf $(tudat-bundle-app-dir) # Clean build directory
 	rm -f tudat-app # Clean tudat-app
-#	rm -f matlab-check.log # Clean matlab-check
 	rm -f ./output/*.dat
 	rm -f ./output/*.mat
+	rm -f ./output/*.txt
 	rm -rf ./logs
 	rm -f *.asv
 
@@ -75,13 +71,13 @@ confirmation-clean:
 
 # Help 
 help:
-	@echo 'all: 		Compile tudat app and perform matlab check'
-	@echo 'all: 		Compile tudat app'
-	@echo 'tudat:		Compile tudat app'
-	@echo 'matlab: 	Perform matlab check'
-	@echo 'run: 		Run tudat app and matlab server'
-	@echo 'run-tudat: 	Run tudat app'
-	@echo 'output: 	Save output results to .mat file and zip raw output files alongside with the source code and logs' 
-	@echo 'clean: 		Clean output results, logs, and compiled objects (.zip of past simualtions are not deleted)'
+	@echo 'all: 		 Compile tudat app and perform matlab check'
+	@echo 'all: 		 Compile tudat app'
+	@echo 'tudat:		 Compile tudat app'
+	@echo 'matlab-check: Perform matlab check'
+	@echo 'run: 		 Run tudat app and matlab server'
+	@echo 'run-tudat: 	 Run tudat app'
+	@echo 'output: 		 Save output results to .mat file and zip raw output files alongside with the source code and logs' 
+	@echo 'clean: 		 Clean output results, logs, and compiled objects (.zip of past simualtions are not deleted)'
 
 

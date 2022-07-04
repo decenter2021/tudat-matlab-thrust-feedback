@@ -1,21 +1,15 @@
-%% Simulation of constellation of LEO satellites
-% Implementation of distributed decentralized LQR
-
-%% Notes and issues:
-% - 'Define constellation' section should be uploaded from .h file when it
-% is implemented with tudat
-% - allow a starting time different from 0 / and an associated anchor to
-% allow for the continuation of a simulation
-
+%% Package: tudat-matlab-thrust-feedback
+% Author: Leonardo Pedroso
+%% Simulation of constellation of LEO satellites 
+% Numeric dynamics simulation in tudat 
+% Thrust feedback in MATLAB using package tudat-matlab-thrust-feedback
 %% Init 
 % Variable 'matlab_check' may be received as an input to run a small
 % simulation propagated in matlab to make sure there are no errors
 clearvars -except matlab_check; % Clear workspace variables
-% Add source of orbital dynamics utilities
-addpath('../src');
-addpath('../src-osculating2mean');
+%% Add source of packages to matlab path
 % Add source of tudat feedback matlab server class
-addpath('../src-tudat'); 
+addpath('../src-tudat-matlab-thrust-feedback'); 
 tic; % Log the execution time
 
 %% Define execution options 
@@ -23,9 +17,8 @@ tic; % Log the execution time
 tudatSimulation = true;
 % Turn off parameter upload from C header
 uploadHeaderParameters = true;
-headerParametersFilepath = 'constellationParameters.h';
-% Turn off decentralized computation for debug purposes
-decentralized = true;
+headerParametersFilepath = 'tudat-matlab-parameters.h';
+
 % If the goal is to perform a matlab check propagate dynamics in matlab and
 % upload paramenters for C header file
 if exist('matlab_check','var') && matlab_check
@@ -76,8 +69,8 @@ walkerParameters = ... % i:T/P/F
 semiMajorAxis = argv(2); % (m)
 Ct1 = argv(3); % (N)
 else
-numberOfPlanes = 6;%72;
-numberOfSatellitesPerPlane = 5;%22;
+numberOfPlanes = 6;
+numberOfSatellitesPerPlane = 5;
 inclination = 53.0*pi/180; %(rad)
 phasingParameter = 17;
 walkerParameters = ... % i:T/P/F
@@ -123,8 +116,7 @@ else
     Tsim = 10e3; % Simulation time (s)
     ItSim = Tsim/Tctrl+1;
     % Load initial state
-    x0 = readmatrix('./data/x0/x0_osculating.txt')';
-    %load('./data/x0/x0_osculating.mat','x0');
+    x0 = readmatrix('./data/x0/x0_constellation_30.txt')';
 end
 if ~tudatSimulation
     % State evolution
@@ -145,45 +137,14 @@ end
 %% Initialize controller
 fprintf('@MATLAB server: Initializing thrust feedback controller.\n');
 % ----- Controller parameters -----
-% Tracking
-trackingRange = 750e3; %5000e3; %(m)
-% osculating2mean 
-degree_osculating2mean = 12;
-% Gain synthesis parameters
-MPC_T = 100; 
-MPC_d = 25;
-% MPC window update
-MPC_K = cell(N,MPC_d);
-MPC_currentWindowGain = 0;
-MPC_u = zeros(m_single,N);
-% Dynamics matrices
-A = cell(N,1);
-B = cell(N,1);
-H = cell(N,N);
-Q = cell(N,1);
-R = cell(N,1);
-o = zeros(N,1); % Number of relative tracking outputs
-% Topology matrices
-Di_tau_1 = cell(N,1);
-Di_tau = cell(N,1);
-% Cost 
-P_kl = cell(N,1);
-P_kl_prev = cell(N,1);
-% Be very carefull: K_tau_1{i,1} are the gains computed in i -> that will 
-% be used to compute the actuation in other agents
-% On the other hand, MPC_K{i,tau+1} are the gains that are used in i to
-% compute the actuation at the tau-th discrete-time insant of the window
-K_tau_1 = cell(N,1);
-% Start a parallel pool
-if decentralized
-    fprintf('@MATLAB server: ');
-    parpool(35);
-end
+% Define controller variables here
+% E.g. define kp, kd, ki of a PID controller
+% E.g. define window length of MPC scheme 
+thrust_mag = 0.06; (N)
 
 %% Request loop
 fprintf('@MATLAB server: Thrust feedback controller waiting for requests.\n');
 % Init simulation loop for propagation in matlab
-%if ~tudatSimulation, it = 0; end
 it = 0;
 while(1)    
     %% Init control feedback for this instant
@@ -208,15 +169,15 @@ while(1)
         t = (it-1)*Tctrl;
     end
     
-    %% Run an iteration of the DDLQR algorithm
-    DDELQR_iteration_routine;
+    %% Run feedback routine
+    matlab-feedback-routine;
 
     %% Vectorize and send constellation thrust command
     % Send actuation in TNW frame (X: velocity; Y: - along radius; Z: angular momentum)
     if tudatSimulation
         % Tudat's TNW frame is broken! Sencond and third axis are *(-1),
         % i.e., in tudat (X: velocity; Y:  along radius; Z: - angular momentum)
-        u_tudat = MPC_u;
+        u_tudat = u;
         u_tudat([2 3],:) = -u_tudat([2 3],:);
         tudat.sendResponse(u_tudat(:)); 
     else
@@ -226,15 +187,15 @@ while(1)
             u{i,1}(:,it) = MPC_u(:,i);%u_t((i-1)*m_single+1:i*m_single);
         end
         % Propagate orbit
-        %for i = 1:N
-        parfor i = 1:N
+        for i = 1:N
+        %parfor i = 1:N
             x{i,1}(:,it+1) = propagateSatellite(x{i,1}(:,it),u{i,1}(:,it),Tctrl);
         end
     end
 end
 toc;
 
-%% Save data if simulatio was performed in matlab
+%% Save data if simulation was performed in matlab
 if ~tudatSimulation && (~exist('matlab_check','var') || ~matlab_check)
     mkdir('output');
     save('./output/output_matlab_propagation.mat','x','u','uploadHeaderParameters');
@@ -242,8 +203,9 @@ end
 
 %% Termination controller
 if tudatSimulation
-% Shut down parallel pool
+% Shut down any parallel pool
 delete(gcp('nocreate'));
 clear tudatCleanUp;
 fprintf('@MATLAB server: Thrust feedback controller has been terminated.\n');
 end
+

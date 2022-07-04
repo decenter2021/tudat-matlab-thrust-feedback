@@ -147,103 +147,14 @@ make[3]: Entering directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
 Scanning dependencies of target tudat-app
 make[3]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
 make[3]: Entering directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
-[100%] Building CXX object tudat/tudat-applications/tudat-app/CMakeFiles/tudat-app.dir/simulationConstellation.cpp.o
-In file included from /mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/simulationConstellation.cpp:24:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h: In constructor ‘tudatThrustFeedbackMatlab::tudatThrustFeedbackMatlab(unsigned int, unsigned int, double, int, double, double)’:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:37:90: warning: use of old-style cast to ‘int’ [-Wold-style-cast]
-   37 |         this->endTimeInstant_ = (int) (simulationEndEpoch_/epochControlUpdatePeriod + 0.5);
-      |                                                                                          ^
-      |                                 -----
-      |                                 static_cast<int> (                                        )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:38:101: warning: use of old-style cast to ‘int’ [-Wold-style-cast]
-   38 |         this->evaluationsPerUpdatePeriod_ = (int) (evaluationsPerUpdatePeriod*numberOfSatellites+0.5);
-      |                                                                                                     ^
-      |                                             -----
-      |                                             static_cast<int> (                                       )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h: In member function ‘Eigen::Vector3d tudatThrustFeedbackMatlab::thrustFeedbackWrapper(double, unsigned int, const std::unordered_map<std::__cxx11::basic_string<char>, std::shared_ptr<tudat::simulation_setup::Body> >&)’:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:59:34: warning: use of old-style cast to ‘int’ [-Wold-style-cast]
-   59 |         int time_instant = (int) time/epochControlUpdatePeriod_;
-      |                                  ^~~~
-      |                            ----------
-      |                            static_cast<int> ( time)
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h: In member function ‘int tudatThrustFeedbackMatlab::establishConnectionMatlabUDP()’:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:145:59: warning: use of old-style cast to ‘const char*’ [-Wold-style-cast]
-  145 |         const char * pingMsg =  (const char *) state.data();
-      |                                                           ^
-      |                                 ---------------------------
-      |                                 reinterpret_cast<const char *> ( state.data())
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:156:89: warning: use of old-style cast to ‘void*’ [-Wold-style-cast]
-  156 |             int status = sendto(this->clientSocket_,  (void *)(pingMsg+numberOfBytesSent),lengthPacket,
-      |                                                                                         ^
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:157:75: warning: use of old-style cast to ‘const struct sockaddr*’ [-Wold-style-cast]
-  157 |                 MSG_CONFIRM, (const struct sockaddr *) &(this->serverAddr_),
-      |                                                                           ^
-      |                              -
-      |                              reinterpret_cast<       -
-      |                                                      > (                   )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:166:89: warning: use of old-style cast to ‘char*’ [-Wold-style-cast]
-  166 |         char * byteStream = (char *) malloc((this->numberOfSatellites_)*3*sizeof(double));
-      |                                                                                         ^
-      |                             --------
-      |                             static_cast<char *> (                                        )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:169:90: warning: use of old-style cast to ‘void*’ [-Wold-style-cast]
-  169 |             int n = recv(this->clientSocket_, (void *)(byteStream + numberOfBytesReceived), numberOfBytesToReceive,
-      |                                                                                          ^
-      |                                               --------
-      |                                               static_cast<void *> (                       )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h: In member function ‘int tudatThrustFeedbackMatlab::terminateConnectionMatlabUDP()’:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:190:58: warning: use of old-style cast to ‘const char*’ [-Wold-style-cast]
-  190 |         const char * pingMsg = (const char *) state.data();
-      |                                                          ^
-      |                                ---------------------------
-      |                                reinterpret_cast<const char *> ( state.data())
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:200:85: warning: use of old-style cast to ‘void*’ [-Wold-style-cast]
-  200 |             status = sendto(this->clientSocket_,  (void *)(pingMsg+numberOfBytesSent),lengthPacket,
-      |                                                                                     ^
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:201:75: warning: use of old-style cast to ‘const struct sockaddr*’ [-Wold-style-cast]
-  201 |                 MSG_CONFIRM, (const struct sockaddr *) &(this->serverAddr_),
-      |                                                                           ^
-      |                              -
-      |                              reinterpret_cast<       -
-      |                                                      > (                   )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:194:13: warning: variable ‘status’ set but not used [-Wunused-but-set-variable]
-  194 |         int status;
-      |             ^~~~~~
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h: In member function ‘int tudatThrustFeedbackMatlab::getFeedback(Eigen::Matrix<double, -1, 1>*)’:
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:219:58: warning: use of old-style cast to ‘const char*’ [-Wold-style-cast]
-  219 |         const char * msgOut = (const char *) state->data();
-      |                                                          ^
-      |                               ----------------------------
-      |                               reinterpret_cast<const char *> ( state->data())
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:230:84: warning: use of old-style cast to ‘void*’ [-Wold-style-cast]
-  230 |             status = sendto(this->clientSocket_,  (void *)(msgOut+numberOfBytesSent),lengthPacket,
-      |                                                                                    ^
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:231:75: warning: use of old-style cast to ‘const struct sockaddr*’ [-Wold-style-cast]
-  231 |                 MSG_CONFIRM, (const struct sockaddr *) &(this->serverAddr_),
-      |                                                                           ^
-      |                              -
-      |                              reinterpret_cast<       -
-      |                                                      > (                   )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:238:89: warning: use of old-style cast to ‘char*’ [-Wold-style-cast]
-  238 |         char * byteStream = (char *) malloc((this->numberOfSatellites_)*3*sizeof(double));
-      |                                                                                         ^
-      |                             --------
-      |                             static_cast<char *> (                                        )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:241:90: warning: use of old-style cast to ‘void*’ [-Wold-style-cast]
-  241 |             int n = recv(this->clientSocket_, (void *)(byteStream + numberOfBytesReceived), numberOfBytesToReceive,
-      |                                                                                          ^
-      |                                               --------
-      |                                               static_cast<void *> (                       )
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:246:45: warning: use of old-style cast to ‘double*’ [-Wold-style-cast]
-  246 |         double * doubleStream = (double * ) byteStream;
-      |                                             ^~~~~~~~~~
-      |                                 ----------------------
-      |                                 reinterpret_cast<double * > ( byteStream)
-/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudatThrustFeedbackMatlab.h:224:13: warning: variable ‘status’ set but not used [-Wunused-but-set-variable]
-  224 |         int status;
-      |             ^~~~~~
-[100%] Linking CXX executable ../../bin/tudat-app
+[100%] Building CXX object tudat/tudat-applications/tudat-app/CMakeFiles/tudat-app.dir/tudat-app.cpp.o
+/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app/tudat-app.cpp:29:10: fatal error: constellationParameters.h: No such file or directory
+   29 | #include "constellationParameters.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[3]: *** [tudat/tudat-applications/tudat-app/CMakeFiles/tudat-app.dir/build.make:63: tudat/tudat-applications/tudat-app/CMakeFiles/tudat-app.dir/tudat-app.cpp.o] Error 1
 make[3]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
-[100%] Built target tudat-app
+make[2]: *** [CMakeFiles/Makefile2:1660: tudat/tudat-applications/tudat-app/CMakeFiles/tudat-app.dir/all] Error 2
 make[2]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
+make[1]: *** [Makefile:130: all] Error 2
 make[1]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'

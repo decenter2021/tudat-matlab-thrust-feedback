@@ -6,7 +6,7 @@
 // Epochs
 // EPOCH_START must be a multile of EPOCH_CONTROL_UPDATE
 #define EPOCH_START 0.0
-#define EPOCH_END 10000.0
+#define EPOCH_END 12000.0
 #define EPOCH_SAMPLE 10.0
 #define EPOCH_CONTROL_UPDATE 10.0
 #define ENVIRONMENT_TIME_BUFFER 300.0
@@ -31,15 +31,15 @@
 #define SAT_SRPA 10.0
 
 // Nominal constellation definition
-#define CONSTELLATION_N_PLANES 72
-#define CONSTELLATION_N_PER_PLANE 22
+#define CONSTELLATION_N_PLANES 6
+#define CONSTELLATION_N_PER_PLANE 5
 #define CONSTELLATION_F 17
 #define CONSTELLATION_SMA 6921000.0
 #define CONSTELLATION_INC convertDegreesToRadians(53.0)
 #define CONSTELLATION_INC_DEG 53.0
 #define CONSTELLATION_ECC 0.0
 #define CONSTELLATION_AOP 0.0
-#define X0_FILE_PATH "./data/x0/x0_tmp6_1584.txt"
+#define X0_FILE_PATH "./data/x0/x0_constellation_30.txt"
 
 // ---------- Server parameters ------------
 #define SERVER_PORT 6038
