@@ -25,7 +25,7 @@
 
 // User defined libraries
 #include "applicationOutput.h" // Minor changes in relation to the file available in tudat examples
-#include "tudatMatlabThrustFeedback.h"
+#include "tudatThrustFeedbackMatlab.h"
 #include "tudat-matlab-parameters.h" 
 
 
