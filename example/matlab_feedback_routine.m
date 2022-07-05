@@ -8,10 +8,11 @@
 % The controller parameters should be defined in matlab-app.m
 
 %% Dummy feedback
+% Thrust along velocity after t = 3000 s
 u_t = zeros(3*N,1);
 for i = 1:N
 	if t>3e3
-		u_t(3*i) = thrust_mag;
+		u_t(3*(i-1)+1) = thrust_mag;
 	end
 end
 
