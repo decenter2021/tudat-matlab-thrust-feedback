@@ -19,7 +19,7 @@ if tudatSimulation
     uploadHeaderParameters = true;
     load('./output/output.mat','x','u');
 else
-    load('./output/output_matlab_propagation.mat','x','u','uploadHeaderParameters');
+    load('./output/output_matlab.mat','x','u','uploadHeaderParameters');
 end
 
 %% Get some simulation parameters

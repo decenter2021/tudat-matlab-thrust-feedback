@@ -14,7 +14,7 @@ tic; % Log the execution time
 
 %% Define execution options 
 % Turn off tudat simulation for debug
-tudatSimulation = true;
+tudatSimulation = false;
 % Turn off parameter upload from C header
 uploadHeaderParameters = true;
 headerParametersFilepath = 'tudat-matlab-parameters.h';
@@ -233,7 +233,7 @@ toc;
 %% Save data if simulation was performed in matlab
 if ~tudatSimulation && (~exist('matlab_check','var') || ~matlab_check)
     mkdir('output');
-    save('./output/output_matlab_propagation.mat','x','u','uploadHeaderParameters');
+    save('./output/output_matlab.mat','x','u','uploadHeaderParameters');
 end
 
 %% Termination controller
