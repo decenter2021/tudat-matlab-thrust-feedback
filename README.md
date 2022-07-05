@@ -1,7 +1,11 @@
-# 🛰 osculating2mean
+# 🛰 tudat-matlab-thrust-feedback
 
 ## 🎯 Features
-- Convert **osculating orbital elements** to/from **mean orbital elements** using spherical harmonics Earth gravity potential in MATLAB.
+- **Thrust feedback** of [TUDAT](https://tudat-space.readthedocs.io/en/latest/) application using **MATLAB**
+- Assess the performance of **novel control solution** developed in MATLAB to a single spacecraft / constellation of satellites
+- **High-fidelity** numerical propagation 
+- **Easy** to implement control strategy in **high-level** MATLAB language
+- **Seamless** transition between high-fidelity simulation using TUDAT and **simple propagation** in MATLAB for **debug** puposes
 
 ***
 ## 🚀 Index
@@ -20,11 +24,20 @@
 
 ## 💡 Description
 
-The **osculating2mean** toolbox is developed for **MATLAB**. The backbone computations of the spherical harmonics Earth gravity potential perturbations are written in FORTRAN and called from MATLAB. 
+The **tudat-matlab-thrust-feedback** toolbox provides an **interface** between a C++ [TUDAT](https://tudat-space.readthedocs.io/en/latest/) application and **MATLAB** to define a **thrust feedback control law**. The architecture of the overall environment is shown below.
 
-The [EGM96 NASA GSFC and NIMA Joint Geopotential Model](https://cddis.nasa.gov/926/egm96/) is used.
+![simulation_scheme drawio-2-2](https://user-images.githubusercontent.com/40807922/177381510-b3d2b191-8a1d-427d-a67c-f419e7efef95.svg)
 
-This package was developed for **non-singular** orbital elements, for **near-circular** orbits, but it may be expanded to general orbits easily. 
+The **tudat-matlab-thrust-feedback** toolbox supports the simulation of **multiple spacecrafts**, each with its own feedback control law. Thus, it is suitable to simulate and control **large constellations** of satellites, for instance.
+
+Advantages of **tudat-matlab-thrust-feedback** over implementing a thrust feedback control law directly in the TUDAT application:
+- **Faster** and **easier** to **debug** and **implement** control laws in MATLAB
+- **Fast** and **easy** to implement the distributed computation of control laws for a large-number of spacecrafts (using the [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html))
+- Run TUDAT and MATLAB application in **separate machines** (e.g. a **computing server** if the control-law evaluation is very intensive)
+- **Novel** control strategies are often **developed in MATLAB**
+
+In few words:
+> Combine the high-fidelity propagation of TUDAT with the practicality of MATLAB
 
 ***
 
@@ -36,7 +49,7 @@ Pedro Batista<sup>1</sup> <a href="https://scholar.google.com/citations?user=6eo
 ***
 
 ## 📞 Contact
-**osculating2mean** toolbox is currently maintained by Leonardo Pedroso (<a href="mailto:leonardo.pedroso@tecnico.ulisboa.pt">leonardo.pedroso@tecnico.ulisboa.pt</a>).
+**tudat-matlab-thrust-feedback** toolbox is currently maintained by Leonardo Pedroso (<a href="mailto:leonardo.pedroso@tecnico.ulisboa.pt">leonardo.pedroso@tecnico.ulisboa.pt</a>).
 
 ***
   
