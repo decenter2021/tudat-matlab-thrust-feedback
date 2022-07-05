@@ -17,7 +17,7 @@
 - [Installation](#-installation)
 - [Documentation](#-documentation)
 - [Example](#-example)
-- [Contributing to osculating2mean](#-contributing-to-osculating2mean)
+- [Contributing](#-contributing)
 - [Lincense](#-license)
 - [References](#-references)
 
@@ -85,7 +85,7 @@ The documentation is divided into the following categories:
 
 ***
   
-## ✨ Contributing to **osculating2mean**
+## ✨ Contributing
 
 The community is encouraged to contribute with 
 - Suggestions
