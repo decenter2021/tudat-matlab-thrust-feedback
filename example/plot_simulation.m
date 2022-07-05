@@ -75,23 +75,33 @@ for i = 1:N
 end
 
 %% Plot OE evolution of a single satellite
-sat = 1;
+sat = 13;
 
 ItSim = length(OE{sat,1}(1,:));
 figure;
 hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$a$ (m)", 'Interpreter','latex');
 plot((0:ItSim-1)*Tctrl,OE{sat,1}(1,:),'LineWidth',3);
 
 figure;
+polarplot(OE{sat,1}(2,:),OE{sat,1}(1,:),'LineWidth',3);
+title("$a(u)$ (m)", 'Interpreter','latex');
 hold on;
+p = gca;
+p.RLim = [2*min(OE{sat,1}(1,:))-max(OE{sat,1}(1,:)) max(OE{sat,1}(1,:))];
+
+figure;
+hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$u$ (rad)", 'Interpreter','latex');
 plot((0:ItSim-1)*Tctrl,OE{sat,1}(2,:),'LineWidth',3);
 
 figure;
 hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$e$", 'Interpreter','latex');
 plot((0:ItSim-1)*Tctrl,OE{sat,1}(3,:),'LineWidth',3);
@@ -100,19 +110,23 @@ legend({'$e_x$','$e_y$'}, 'Interpreter','latex');
 
 figure;
 hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$i$ (rad)", 'Interpreter','latex');
 plot((0:ItSim-1)*Tctrl,OE{sat,1}(5,:),'LineWidth',3);
 
 figure;
 hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$\Omega$ (rad)", 'Interpreter','latex');
 plot((0:ItSim-1)*Tctrl,OE{sat,1}(6,:),'LineWidth',3);
 
 figure;
-hold on
+hold on;
+grid on;
 xlabel("$t$ (s)", 'Interpreter','latex');
 ylabel("$m$ (Kg)", 'Interpreter','latex');
+ylim([min(x{sat,1}(7,:))-0.001 max(x{sat,1}(7,:))+0.001])
 plot((0:ItSim-1)*Tctrl,x{sat,1}(7,:),'LineWidth',3);
 
