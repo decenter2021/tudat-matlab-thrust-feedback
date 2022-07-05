@@ -2,28 +2,21 @@
 
 %% Init 
 clear; % Clear workspace variables
-% Add source of orbital dynamics utilities
-addpath('../src','-frozen');
-addpath('../src-osculating2mean','-frozen');
 % Add source of tudat feedback matlab server class
-addpath('../src-tudat','-frozen');
+addpath('../src-tudat-matlab-thrust-feedback','-frozen');
 
 %% Define execution options 
 % Turn off tudat simulation for debug
 tudatSimulation = true;
 % Parameter upload from C header
-headerParametersFilepath = 'constellationParameters.h';
-%simulationOutputFilepath = './archive/2022_06_07_06_53_06_new_osculating2mean/output.mat';
-simulationOutputFilepath = './archive/tuning/0_1/2022_06_12_18_44_35_T700_d70/output.mat';
+headerParametersFilepath = 'tudat-matlab-parameters.h';
 
 %% Load data
 if tudatSimulation
     uploadHeaderParameters = true;
     load('./output/output.mat','x','u');
-    %load(simulationOutputFilepath,'x','u');
 else
-    %load('./output/output_matlab_propagation.mat','x','u','uploadHeaderParameters');
-    load(simulationOutputFilepath,'x','u','uploadHeaderParameters');
+    load('./output/output_matlab_propagation.mat','x','u','uploadHeaderParameters');
 end
 
 %% Get some simulation parameters

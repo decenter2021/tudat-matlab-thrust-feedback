@@ -1,0 +1,24 @@
+[?1h=
+                                               < M A T L A B (R) >
+                                     Copyright 1984-2021 The MathWorks, Inc.
+                                    R2021b (9.11.0.1769968) 64-bit (glnxa64)
+                                               September 17, 2021
+
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/builtins] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/commands] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/functions] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/lib] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/structures] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx/functions/vec_] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx] 
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+{Error using exit
+Unrecognized function or variable 'Settings'.
+} 
+{Error using exit
+Unrecognized function or variable 'Settings'.
+} 
+[?1l>

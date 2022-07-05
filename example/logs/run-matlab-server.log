@@ -1,0 +1,30 @@
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/builtins] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/commands] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/functions] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/lib] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/structures] 
+[Warning: Directory permission denied:
+/mnt/nfs/home/poseidon/research/PCA/cvx/functions/vec_] 
+[Warning: Directory permission denied: /mnt/nfs/home/poseidon/research/PCA/cvx] 
+@MATLAB server: Setting up feedback server.
+@MATLAB server: Starting MATLAB server.
+@MATLAB server: Hosted at 127.0.0.1:6013.
+@MATLAB server: Waiting for Tudat client.
+@MATLAB server: Client connected.
+@MATLAB server: Defining nominal constellation.
+@MATLAB server: Retrieving simulation parameters.
+@MATLAB server: Initializing thrust feedback controller.
+@MATLAB server: Thrust feedback controller waiting for requests.
+Elapsed time is 85.903424 seconds.
+@MATLAB server: Thrust feedback controller has been terminated.
+{Error using exit
+Unrecognized function or variable 'Settings'.
+} 
+{Error using exit
+Unrecognized function or variable 'Settings'.
+} 

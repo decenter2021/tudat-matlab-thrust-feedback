@@ -14,7 +14,7 @@ tic; % Log the execution time
 
 %% Define execution options 
 % Turn off tudat simulation for debug
-tudatSimulation = false;
+tudatSimulation = true;
 % Turn off parameter upload from C header
 uploadHeaderParameters = true;
 headerParametersFilepath = 'tudat-matlab-parameters.h';
