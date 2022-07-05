@@ -42,6 +42,6 @@
 #define X0_FILE_PATH "./data/x0/x0_constellation_30.txt"
 
 // ---------- Server parameters ------------
-#define SERVER_PORT 6038
+#define SERVER_PORT 6013
 
 #endif

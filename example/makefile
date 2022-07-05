@@ -6,20 +6,18 @@ tudat-bundle-dir := /mnt/nfs/home/lpedroso/tudat-bundle
 # Tudat app specific variables
 tudat-matlab-feedback-dir := ../src-tudat-matlab-thrust-feedback
 cpp-src := tudat-app.cpp
-matlab-feedback-src := matlab-app
+matlab-feedback-src := matlab_app
 matlab-check-control-cycles := 5
 # ------------------------------------------------------------------------------
 
 # Current dir for logs
 mkfile-dir := $(shell pwd)
 date-now := $(shell date +"%Y_%m_%d_%H_%M_%S")
-tudat-bundle-app-dir := /mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app
-# tudat-bundle-app-dir := $(tudat-bundle-dir)/mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app
+tudat-bundle-app-dir := $(tudat-bundle-dir)/tudat/tudat-applications/tudat-app
 
 # High-level targets
 all: tudat-app
 tudat: tudat-app
-#matlab: matlab-check.log
 
 # Run target
 run: tudat-app
