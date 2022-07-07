@@ -69,7 +69,6 @@ confirmation-clean:
 
 # Help 
 help:
-	@echo 'all: 		 Compile tudat app and perform matlab check'
 	@echo 'all: 		 Compile tudat app'
 	@echo 'tudat:		 Compile tudat app'
 	@echo 'matlab-check: Perform matlab check'
@@ -77,5 +76,4 @@ help:
 	@echo 'run-tudat: 	 Run tudat app'
 	@echo 'output: 		 Save output results to .mat file and zip raw output files alongside with the source code and logs' 
 	@echo 'clean: 		 Clean output results, logs, and compiled objects (.zip of past simualtions are not deleted)'
-
 
