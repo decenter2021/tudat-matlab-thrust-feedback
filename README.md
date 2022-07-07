@@ -504,4 +504,5 @@ To contribute to **tudat-matlab-thrust-feedback**
 
 ## 💥 References 
 
+<a href="">Pedroso, L., Batista, P. 2022. Distributed Decentralized Receding Horizon Control for Very Large-Scale Networks with Application to Satellite Mega-Constellations Station-Keeping [not published yet]</a>
  
