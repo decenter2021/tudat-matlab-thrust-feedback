@@ -84,9 +84,19 @@ The documentation is divided into the following categories:
 - [Run a simulation](#run-a-simulation)
 
 ### Setup thrust feedback in TUDAT
+ 
+It is recommended to setup the thrust feedback in **TUDAT** from the **template** available in [Example](#-example). 
+
+This template allows:
+- to define **common MACROS** between **TUDAT** and **MATLAB** in C header file
+- save the thrust data and spacecraft state automatically to a <tt>.mat</tt> file
+ 
+For simulation data post-processing see [Run a simulation](#run-a-simulation).
+ 
+The main steps for seting up the thrust feedback in TUDAT **from sractch** are shown below.
 
 **1.** To include the **tudat-matlab-thrust-feedback** toolbox in the source code use:
-```c++
+```cpp
 #include "tudatThrustFeedbackMatlab.h"
 ```
  
@@ -94,7 +104,7 @@ The documentation is divided into the following categories:
  
 **3.** To add thrust acceleration with feedback from MATLAB create a <tt>tudatThrustFeedbackMatlab</tt> object. The constructor follows
 
-```c++
+```cpp
 tudatThrustFeedbackMatlab( const unsigned int port, 
                            const unsigned int numberOfSatellites, 
                            const double epochControlUpdatePeriod,
@@ -114,7 +124,7 @@ where
 > Example: <i>Create a <tt>tudatThrustFeedbackMatlab</tt> object</i>
 > 
 > Macros:
-> ```c++
+> ```cpp
 > // MATLAB server port
 > #define SERVER_PORT 6013
 > // Simulation end epoch (s)
@@ -128,7 +138,7 @@ where
 > #define SAT_g0 9.81
 > ```
 > Create <tt>tudatThrustFeedbackMatlab</tt> object using a fixed-step RK4 solver (5 queries per integration step)
-> ```c++
+> ```cpp
 > // Select number of spacecraft
 > unsigned int numberOfSatellites = 1584;
 > // Create tudatThrustFeedbackMatlab object
@@ -145,7 +155,7 @@ where
 First, assign sequential numeric ids to each spacecraft (starting at 0).
 
 Second, bind a function for spacecraft <tt>i</tt> to <tt>thrustFeedbackWrapper</tt> method:
-```c++
+```cpp
 // Bind thrust feedback wrapper for each spacecraft
 std::function <Eigen::Vector3d(const double)> thrustFeedbackSati =
     std::bind(&tudatThrustFeedbackMatlab::thrustFeedbackWrapper, 
@@ -160,8 +170,8 @@ where
 Third, create a <t>ThrustAccelerationSettings</t> for each spacecraft with <tt>thrustFeedbackSati</tt> and add it to the acceleration map.
 
 > Example: <i>Setup the acceleration models for a constellation of <tt>numberOfSatellites</tt>satellites</i>.
-> Thrust defined in TNW frame relative to the Earth
-> ```c++
+> Thrust defined in TNW frame relative to the Earth.
+> ```cpp
 > // ---------- Create planets objects ----------
 > SystemOfBodies bodies = (...)
 > 
@@ -207,14 +217,238 @@ Third, create a <t>ThrustAccelerationSettings</t> for each spacecraft with <tt>t
 >     createAccelerationModelsMap(bodies,accelerationMap,bodiesToPropagate,centralBodies);
 >```
  
+See [Example](#-example) for a complete example. 
+
+***
+ 
 ### Setup thrust feedback in MATLAB
+ 
+It is recommended to setup the thrust feedback in MATLAB, from the template available in [Example](#-example). 
 
+This template allows:
+- to define **common MACROS** between **TUDAT** and **MATLAB** in C header file 
+- transition seamlessly between TUDAT simulation and a simplistic matlab simulation (for debug purposes)
+ 
+The main steps for seting up the thrust feedback in MATLAB **from sractch** are shown below.
 
+**1.** Setup MATLAB UDP server to listen for feedback requests
+ 
+```m
+% Setup server
+% Output position-velocity-mass as vector: flag = 0 | Output as matrix: flag = 1
+tudat = tudatMatlabServer(port,addr,N,flag);
+% Setup cleanup
+tudatCleanUp = onCleanup(@()tudat.delete());
+% Wait for tudat-app
+tudat.waitForClient();
+```
+where 
+ - <tt>port</tt>: server port
+ - <tt>addr</tt>: server address
+ - <tt>N</tt>: number of spacecrafts
+ - <tt>flag = 0</tt>: position-velocity-mass of all spacecraft is concatenated in a single vector for state feedback
+ - <tt>flag = 1</tt>: position-velocity-mass of all spacecraft are the columns of matrix for state feedback
+ 
+> Example: *Setup MATLAB UDP server* 
+> ```m
+> N = 1584;
+> port = 6013;
+> addr = '127.0.0.1';
+> % Setup server
+> tudat = tudatMatlabServer(port,addr,N,flag);
+> % Setup cleanup
+> tudatCleanUp = onCleanup(@()tudat.delete());
+> % Wait for tudat-app
+> tudat.waitForClient();
+> ```
+
+**2.** Wait for to feedback requests with 
+```m 
+[t,x_t,state] = tudat.getRequest();
+```
+where
+- <tt>t</tt>: epoch of feedback request
+- <tt>x_t</tt>: state for feedback of all satellites (output defined by <tt>falg</tt> in step 1)
+- <tt>state</tt>: if $\neq 0$ TUDAT simulation is finished and the server may be terminated
+
+**3.** Compute the actuation and send it to TUDAT with 
+```m 
+% Implement control law
+%u_t = f(t,x_t)  
+% Send feedback
+tudat.sendResponse(u_t); 
+```
+where
+ - <tt>u_t</tt>: concatenation of the thrust vectors of all spacecrafts 
+ 
+**4.** Terminate the server using 
+```m
+if state 
+    clear tudatCleanUp;
+end
+```
+
+***
  
 ### Run a simulation
 
+To run a simulation, we simply have to:
+ - compile TUDAT C++ app using the [tudat-bundle](#-requisites)
+ - run the MATLAB script and setup the feedback server  
+ - afterwards, run the TUDAT executable
+
+To automate this process a template of a `makefile` is available. To setup this `makefile` for your needs you have to set some variables in the beginning of the `makefile`:
+```make
+# -------------- Set paths -----------------------------------------------------
+# Matlab dirs
+matlab-exe := /usr/local/MATLAB/R2021b/bin/matlab
+# Tudat installation specific variables
+tudat-bundle-dir := /mnt/nfs/home/lpedroso/tudat-bundle
+# Tudat app specific variables
+tudat-matlab-feedback-dir := ../src-tudat-matlab-thrust-feedback
+cpp-src := tudat-app.cpp
+matlab-feedback-src := matlab_app
+matlab-check-control-cycles := 5
+# ------------------------------------------------------------------------------
+```
+where 
+ - `matlab-exe`: path of MATLAB app
+ - `tudat-bundle-dir`: path of tudat-bundle installation directory
+ - `tudat-matlab-feedback-dir`: path of tudat-matlab-thrust-feedback toolbox source code
+ - `cpp-src`: `*.cpp`tudat app source code
+ - `matlab-feedback-src`: `*.m` MATLAB script
+ - `matlab-check-control-cycles`: number of control cycles to be run when testing `matlab-feedback-src` for errors
 *** 
  
+The available targets and their descriptions can be checked using
+ ```make
+$ make help
+all: 		 Compile tudat app
+tudat:		 Compile tudat app
+matlab-check: Perform matlab check
+run: 		 Run tudat app and matlab server
+run-tudat: 	 Run tudat app
+output: 		 Save output results to .mat file and zip raw output files alongside with the source code and logs
+clean: 		 Clean output results, logs, and compiled objects (.zip of past simualtions are not deleted)
+```
+ 
+To run a simulation makinh use of this `makefile`:
+
+**1.** **Compile** TUDAT app with 
+```make
+$ make tudat
+(...)
+[100%] Linking CXX executable ../../bin/tudat-app
+make[3]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
+[100%] Built target tudat-app
+make[2]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
+make[1]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
+cp /mnt/nfs/home/lpedroso/tudat-bundle/build/tudat/bin/tudat-app ./ # Retrieve app
+ ```
+ 
+> Warning: Ignore the massive dump of warnings concerning the *use of old-style cast* during compilation
+ 
+**2.** *(Optional)* Check matlab sript for errors:
+
+```make
+$ make matlab-check 
+@MATLAB server: Defining nominal constellation.
+@MATLAB server: Retrieving simulation parameters.
+@MATLAB server: Initializing thrust feedback controller.
+@MATLAB server: Thrust feedback controller waiting for requests.
+[======================================================================] 100.00 %
+Elapsed time is 7.017307 seconds.
+```
+ 
+It runs a simulation propagated in MATLAB for `$(matlab-check-control-cycles)` as defined in the `makefile` to catch any errors in the MATLAB script. 
+ 
+**3.** Run the simulation:
+ 
+```make 
+$ make run
+@Tudat: Creating MATLAB thrust feedback object for 30 satellites.
+@Tudat: Entered establish connection UDP.
+@Tudat: Sent ping.
+@Tudat: MATLAB UDP connection established.
+Started simulation.
+Dependent variables being saved, output vector contains: 
+Vector entry, Vector contents
+[======================================================================] 100 %
+Saving results.
+Simulation complete.
+```
+
+A new terminal window is opens to run the MATLAB script, which outputs:
+ 
+```
+@MATLAB server: Setting up feedback server.
+@MATLAB server: Starting MATLAB server.
+@MATLAB server: Hosted at 127.0.0.1:6013.
+@MATLAB server: Waiting for Tudat client.
+@MATLAB server: Client connected.
+@MATLAB server: Defining nominal constellation.
+@MATLAB server: Retrieving simulation parameters.
+@MATLAB server: Initializing thrust feedback controller.
+@MATLAB server: Thrust feedback controller waiting for requests.
+Elapsed time is 85.911747 seconds.
+@MATLAB server: Thrust feedback controller has been terminated.
+```
+
+If the simulation is successfull:
+- status logs are available at `/logs`
+- the thrust force and state of each spacecraft for each interation step are saved as `.dat` files in `/output`
+
+**4.** Process simulation results
+
+To atomaticaly process the simulation results run 
+```make
+$ make output
+(...)
+adding: output/stateSat9.dat (deflated 56%)
+adding: output/output.mat (deflated 0%)
+adding: tudat-app.cpp (deflated 78%)
+adding: tudat-matlab-parameters.h (deflated 60%)
+adding: matlab_app.m (deflated 65%) 
+adding: matlab_feedback_routine.m (deflated 33%)
+adding: plot_simulation.m (deflated 67%) 
+adding: makefile (deflated 63%)
+adding: logs/cmake-tudat-app.log (deflated 85%)
+adding: logs/get-tudat-output.log (deflated 69%)
+adding: logs/matlab-check.log (deflated 71%)
+adding: logs/run-matlab-server.log (deflated 70%)
+adding: logs/run-tudat-app.log (deflated 99%)
+```
+
+The simulation results become available as
+ - `/output/output.mat` with state and thrust evolution throughout the simulation
+ - zip file in `/output` with all the raw simulation results and source code
+ 
+**5.** *(Optional)* Clean simulation results
+
+After having archived all the simulation results, you can delete
+- the TUDAT executable
+- the logs in  `/logs/` 
+- output results in `/output`
+
+with 
+ 
+```make
+$ make clean
+Do you really want to delete all output results, logs, and executables? [y/n]
+y
+rm -rf /mnt/nfs/home/lpedroso/tudat-bundle/tudat/tudat-applications/tudat-app # Clean build directory
+rm -f tudat-app # Clean tudat-app
+rm -f ./output/*.dat
+rm -f ./output/*.mat
+rm -f ./output/*.txt
+rm -rf ./logs
+rm -f *.asv
+```
+ 
+> *Warning*: The `.zip` archives in `/output` are not deleted during `make clean`
+
+*** 
+
 ## 🦆 Example
  
 
@@ -240,7 +474,5 @@ To contribute to **tudat-matlab-thrust-feedback**
 ***
 
 ## 💥 References 
-<p align="justify">
 
-
-</p> 
+ 
