@@ -11,16 +11,16 @@
 ***
 ## 🚀 Index
 
-- [Description](#-description)
-- [Authors](#-authors)
-- [Contact](#-contact)
-- [Installation](#-installation)
-- [Requisites](#-requisites)
-- [Documentation](#-documentation)
-- [Example](#-example)
-- [Contributing](#-contributing)
-- [Lincense](#-license)
-- [References](#-references)
+- 💡 [Description](#-description)
+- ✍🏼 [Authors](#-authors)
+- 📞 [Contact](#-contact)
+- 💿 [Installation](#-installation)
+- 🤝 [Requisites](#-requisites)
+- 📖 [Documentation](#-documentation)
+- 🦆 [Example](#-example)
+- ✨ [Contributing](#-contributing)
+- 📄 [License](#-license)
+- 💥 [References](#-references)
 
 ***
 
