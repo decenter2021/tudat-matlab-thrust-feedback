@@ -451,7 +451,36 @@ rm -f *.asv
 
 ## 🦆 Example
  
+The example in `/example` can be used a template to use the **tudat-matlab-thrust-feedback** toolbox. All the source files are **thoroughly commented**.
 
+The C header `/example/tudat-matlab-parameters.cpp` is used to define a set of common macros used by TUDAT and MATLAB
+ 
+The TUDAT source code `/example/tudat-app.cpp` is written according to [Setup thrust feedback in TUDAT](#setup-thrust-feedback-in-tudat)
+ 
+The MATLAB feedback script is dived into two parts:
+ - `/example/matlab_app.m`: setup server, simulation environment, and define controller parameters according to [Setup thrust feedback in MATLAB](#setup-thrust-feedback-in-matlab)
+ - `/example/matlab_feedback_routine.m`: implement the control policy, i.e., compute the actuation of every spacecraft acording to the position-velocity-mass vectors and time-intant 
+ 
+For debug puposes, you can run the simulation directly in MATLAB with a simplistic propagation taking into account:
+- Point-mass gravity of the Earth
+- Effect of $J_2$
+- Linearized atmospheric drag 
+ 
+To run it:
+ - set the variable `tudatSimulation` to `false` in `/example/matlab_app.m`
+ - run script `/example/matlab_app.m` dirctely in MATLAB
+ 
+In this example, a LEO constellation of 30 satellites is simulated. A dummy feedback law is used, which after half of an orbital period sets a constant thrust along the velocity vector. 
+ 
+The example can be run according to [Run a simulation](#run-a-simulation). The simulation results for satellite 13 are shown below 
+ 
+![a_polar_sat13](https://user-images.githubusercontent.com/40807922/177766203-c820703e-605b-4e9b-a949-e8d24c2cb0a0.svg)
+![a_sat13](https://user-images.githubusercontent.com/40807922/177766208-d3820fce-f38f-4c9f-a795-32a3957d48bf.svg)
+![e_sat13](https://user-images.githubusercontent.com/40807922/177766209-bcc13682-6352-469f-bb7b-b51003d508de.svg)
+![i_sat13](https://user-images.githubusercontent.com/40807922/177766211-c6006350-8149-4ab8-9e31-57c783773112.svg)
+![Omega_sat13](https://user-images.githubusercontent.com/40807922/177766214-e7bad7b6-d9e3-4af2-911d-415ba9132623.svg)
+![m_sat13](https://user-images.githubusercontent.com/40807922/177766212-3c1fec2e-9d91-4b33-aa25-548315d579ff.svg)
+ 
 ***
   
 ## ✨ Contributing
