@@ -346,7 +346,7 @@ make[1]: Leaving directory '/mnt/nfs/home/lpedroso/tudat-bundle/build'
 cp /mnt/nfs/home/lpedroso/tudat-bundle/build/tudat/bin/tudat-app ./ # Retrieve app
  ```
  
-> Warning: Ignore the massive dump of warnings concerning the *use of old-style cast* during compilation
+> **Warning**: Ignore the massive dump of warnings concerning the *use of old-style cast* during compilation
  
 **2.** *(Optional)* Check matlab sript for errors:
 
@@ -445,7 +445,7 @@ rm -rf ./logs
 rm -f *.asv
 ```
  
-> *Warning*: The `.zip` archives in `/output` are not deleted during `make clean`
+> **Warning**: The `.zip` archives in `/output` are not deleted during `make clean`
 
 *** 
 
