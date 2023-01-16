@@ -71,5 +71,5 @@ else
 end
 
 %% Save cell
-save(strcat(path_tudat_app,"/output/output.mat"),'x','u');
+save(strcat(path_tudat_app,"/output/output.mat"),'x','u','-v7.3');
 clear;
