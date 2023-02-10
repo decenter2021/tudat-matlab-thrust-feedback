@@ -80,8 +80,6 @@ To use **tudat-matlab-thrust-feedback**:
  
 - you must have [tudat-bundle](https://github.com/tudat-team/tudat-bundle) installed. See [tudat-bundle's README](https://github.com/tudat-team/tudat-bundle#readme) for installation details.
 
-- [**Windows users**]  all procedures for the instalation of [tudat-bundle](https://github.com/tudat-team/tudat-bundle) assume the use of WSL. You must install the WSL1 version. See [Linux on Windows with WSL](https://learn.microsoft.com/en-us/windows/wsl/install) for installation details.
-
 - if you intent on applying a feedback control law on **orbital elements** rather than on **Cartesian coordinates**, you may consider using [osculating2mean toolbox](https://github.com/decenter2021/osculating2mean) for that conversion.
  
 *** 
