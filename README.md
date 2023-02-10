@@ -13,6 +13,7 @@
 
 - 💡 [Description](#-description)
 - ✍🏼 [Authors](#-authors)
+- ✨ [Contributors](#-contributors)
 - 📞 [Contact](#-contact)
 - 💿 [Installation](#-installation)
 - 🤝 [Requisites](#-requisites)
