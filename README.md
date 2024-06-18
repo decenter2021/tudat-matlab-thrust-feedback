@@ -45,6 +45,15 @@ Advantages of **tudat-matlab-thrust-feedback** over implementing a thrust feedba
 In few words:
 > Combine the high-fidelity fast propagation of TUDAT with the practicality of MATLAB
 
+---
+
+This repository is part of the work
+<p align="justify">
+<a href="https://www.sciencedirect.com/science/article/pii/S0967066123002976">L. Pedroso and P. Batista, Distributed decentralized receding horizon control for very large-scale networks with application to satellite mega-constellations, Control Engineering Practice, vol. 141, pp. 105728, 2023. doi: 10.1016/j.conengprac.2023.105728.</a>
+</p>
+
+If you use this repository, please [reference](#-references) the publication above.
+
 ***
 
 ## ✍🏼 Authors 
@@ -612,5 +621,17 @@ To contribute to **tudat-matlab-thrust-feedback**
 
 ## 💥 References 
 
-<a href="https://www.sciencedirect.com/science/article/pii/S0967066123002976">L. Pedroso and P. Batista, *Distributed decentralized EKF for very large-scale networks with application to satellite mega-constellations navigation*, Control Engineering Practice, vol. 135, pp. 105509, 2023. doi: 10.1016/j.conengprac.2023.105509.</a>
+<a href="https://www.sciencedirect.com/science/article/pii/S0967066123002976">L. Pedroso and P. Batista, Distributed decentralized receding horizon control for very large-scale networks with application to satellite mega-constellations, Control Engineering Practice, vol. 141, pp. 105728, 2023. doi: 10.1016/j.conengprac.2023.105728.</a>
+
+~~~BibTeX
+@article{PedrosoBatista2023DistributedRHC,
+	author = {Leonardo Pedroso and Pedro Batista},
+	title = {Distributed decentralized receding horizon control for very large-scale networks with application to satellite mega-constellations},
+	journal = {Control Engineering Practice},
+	year = {2023},
+	volume = {141},
+	pages = {105728},
+	doi = {10.1016/j.conengprac.2023.105728}
+}
+~~~
  
