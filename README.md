@@ -18,6 +18,7 @@
 - 💿 [Installation](#-installation)
 - 🤝 [Requisites](#-requisites)
 - 📖 [Documentation](#-documentation)
+-  [`macOS` Dedicated Section](#-macos-dedicated-section)
 - 🦆 [Example](#-example)
 - ✨ [Contributing](#-contributing)
 - 📄 [License](#-license)
@@ -29,7 +30,9 @@
 
 The **tudat-matlab-thrust-feedback** toolbox provides an **interface** between a C++ [TUDAT](https://tudat-space.readthedocs.io/en/latest/) application and **MATLAB** to define a **thrust feedback control law**. The architecture of the overall environment is shown below.
 
-![simulation_scheme drawio-2-2](https://user-images.githubusercontent.com/40807922/177381510-b3d2b191-8a1d-427d-a67c-f419e7efef95.svg)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177381510-b3d2b191-8a1d-427d-a67c-f419e7efef95.svg">
+</p>
 
 The **tudat-matlab-thrust-feedback** toolbox supports the simulation of **multiple spacecrafts**, each with its own feedback control law. Thus, it is suitable to simulate and control **large constellations** of satellites, for instance.
 
@@ -53,7 +56,8 @@ Pedro Batista<sup>1</sup> <a href="https://scholar.google.com/citations?user=6eo
 
 ## ✨ Contributors  
 
-Bruno Midões <a href="https://github.com/BrunoMid"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" style="width:1em;margin-right:.5em;" alt="github icon"></a>
+Bruno Midões <a href="https://github.com/BrunoMid"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" style="width:1em;margin-right:.5em;" alt="github icon"></a><br>
+João Marafuz Gaspar <a href="https://github.com/joaomarafuzgaspar"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" style="width:1em;margin-right:.5em;" alt="github"></a> <a href="https://www.linkedin.com/in/joaomarafuzgaspar/"><img src="https://i.stack.imgur.com/gVE0j.png" style="width:1em;margin-right:.5em;" alt="linkedin"></a>
 
 ***
 
@@ -455,8 +459,91 @@ rm -f *.asv
 ```
  
 > **Warning**: The `.zip` archives in `/output` are not deleted during `make clean`
-
 *** 
+
+##  `macOS` Dedicated Section
+In this section is described the tested and validated procedure (in May 2024 by [@joaomarafuzgaspar](https://github.com/joaomarafuzgaspar)) for macOS users to be able to run this project without wasting a substancial amount of time. 
+
+### 1. Be sure of some prerequisites
+#### 1.1 `MATLAB` and its required add-ons
+Install `MATLAB`. After this, open `MATLAB` and verify which add-ons you have installed.
+```matlab
+ver
+```
+You'll need the **Instrument Control Toolbox** and the **Signal Processing Toolbox**. You can install them through `MATLAB` Add-On Explorer.
+#### 1.2 Make sure you have `boost` installed
+```bash
+$ brew install boost
+```
+
+### 2. Install requisite `tudat-bundle` and `tudat` at their stable tested commits for macOS
+#### 2.1 `tudat-bundle` at commit `508ae48`
+```bash
+$ git clone git@github.com:tudat-team/tudat-bundle.git
+$ cd tudat-bundle
+$ git checkout 508ae48
+```
+
+#### 2.2 `tudat` at version `v2.10.6.dev13`
+```bash
+$ git submodule update --init --recursive
+$ cd tudat
+$ git checkout tags/v2.10.6.dev13
+```
+
+### 3. Comment lines `tudat-bundle/CMakeLists.txt:38-44` to speed up the build
+This way `tudatpy`, which is not used, won't be built.
+```cpp
+37: # TudatPy project.
+38: # if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/.tudatpy-documented)
+39: #     message(STATUS "Using DOCUMENTED tudatpy")
+40: #     add_subdirectory(".tudatpy-documented")
+41: # else ()
+42: #     message(STATUS "Using UNDOCUMENTED tudatpy")
+43: #     add_subdirectory(tudatpy)
+44: # endif ()
+```
+
+### 4. Update `tudat-bundle/tudat/CMakeLists.txt` to speed up the build and fix errors
+Test suite is not needed.
+```cpp
+49: option(TUDAT_BUILD_TESTS "Build the test suite." OFF)
+```
+> [!CAUTION]
+> For this update to work, `tudat-bundle/build.sh:49` needs to be replaced by `BUILD_TESTS="${build_tests:-0}"`.
+
+We only want to propagate the dynamics as precise as possible, while making use of [NASA's `NRLMSISE-00` atmospheric model](https://ccmc.gsfc.nasa.gov/models/NRLMSIS~00/).
+```cpp
+60: option(TUDAT_BUILD_WITH_ESTIMATION_TOOLS "Build tudat with estimation tools." OFF)
+
+78: option(TUDAT_BUILD_WITH_NRLMSISE00 "Build with nrlmsise-00 atmosphere model." ON)
+
+84: option(TUDAT_BUILD_WITH_EXTENDED_PRECISION_PROPAGATION_TOOLS "Build tudat with extended precision propagation tools." ON)
+```
+Add the missing `boost` component - `unit_test_framework`.
+```diff
+- 149: set(_TUDAT_REQUIRED_BOOST_LIBS filesystem system regex date_time thread
+- 150:        chrono atomic)
++ 149: set(_TUDAT_REQUIRED_BOOST_LIBS filesystem system regex date_time thread chrono atomic unit_test_framework)
+```
+Add the application directory to the build for the executable to be generated.
+```cpp
+347: add_subdirectory(tudat-applications/tudat-app)
+```
+
+### 5. Git clone `tudat-matlab-thrust-feedback` to `tudat-bundle`'s directory
+```bash
+$ git clone git@github.com:decenter2021/tudat-matlab-thrust-feedback.git
+$ cd tudat-bundle/example
+```
+
+### 6. Go to *[Run a simulation](#run-a-simulation)* to continue with the setup!
+> [!NOTE]
+> You don't need to worry about building `tudat`, it will be built automatically with:
+> ```bash
+> $ make tudat
+> ```
+***
 
 ## 🦆 Example
  
@@ -482,14 +569,26 @@ To run it:
 In this example, a LEO constellation of 30 satellites is simulated. A dummy feedback law is used, which after half of an orbital period sets a constant thrust along the velocity vector. 
  
 The example can be run according to [Run a simulation](#run-a-simulation). The simulation results for satellite 13 are shown below 
- 
-![a_polar_sat13](https://user-images.githubusercontent.com/40807922/177766203-c820703e-605b-4e9b-a949-e8d24c2cb0a0.svg)
-![a_sat13](https://user-images.githubusercontent.com/40807922/177766208-d3820fce-f38f-4c9f-a795-32a3957d48bf.svg)
-![e_sat13](https://user-images.githubusercontent.com/40807922/177766209-bcc13682-6352-469f-bb7b-b51003d508de.svg)
-![i_sat13](https://user-images.githubusercontent.com/40807922/177766211-c6006350-8149-4ab8-9e31-57c783773112.svg)
-![Omega_sat13](https://user-images.githubusercontent.com/40807922/177766214-e7bad7b6-d9e3-4af2-911d-415ba9132623.svg)
-![m_sat13](https://user-images.githubusercontent.com/40807922/177766212-3c1fec2e-9d91-4b33-aa25-548315d579ff.svg)
- 
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766203-c820703e-605b-4e9b-a949-e8d24c2cb0a0.svg">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766208-d3820fce-f38f-4c9f-a795-32a3957d48bf.svg">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766209-bcc13682-6352-469f-bb7b-b51003d508de.svg">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766211-c6006350-8149-4ab8-9e31-57c783773112.svg">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766214-e7bad7b6-d9e3-4af2-911d-415ba9132623.svg">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/40807922/177766212-3c1fec2e-9d91-4b33-aa25-548315d579ff.svg">
+</p>
+
 ***
   
 ## ✨ Contributing
