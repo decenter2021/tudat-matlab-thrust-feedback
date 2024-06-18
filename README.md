@@ -612,5 +612,5 @@ To contribute to **tudat-matlab-thrust-feedback**
 
 ## 💥 References 
 
-<a href="">Pedroso, L., Batista, P. 2022. Distributed Decentralized Receding Horizon Control for Very Large-Scale Networks with Application to Satellite Mega-Constellations Station-Keeping [not published yet]</a>
+<a href="https://www.sciencedirect.com/science/article/pii/S0967066123002976">L. Pedroso and P. Batista, *Distributed decentralized EKF for very large-scale networks with application to satellite mega-constellations navigation*, Control Engineering Practice, vol. 135, pp. 105509, 2023. doi: 10.1016/j.conengprac.2023.105509.</a>
  
